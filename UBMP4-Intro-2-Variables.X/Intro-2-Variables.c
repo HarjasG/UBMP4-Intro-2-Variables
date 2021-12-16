@@ -26,7 +26,7 @@ const unsigned char maxCount = 50;
 #define pressed 0
 #define notPressed 1
 // Count new SW2 button presses
-        if(SW2 == pressed && SW2Pressed == false)
+       /* if(SW2 == pressed && SW2Pressed == false)
         {
             LED3 = 1;
             if(SW2Count < 255)
@@ -35,17 +35,20 @@ const unsigned char maxCount = 50;
             }
             SW2Pressed = true;
         }
-
+        */
+        
         // Clear pressed state if released
-        if(SW2 == notPressed)
+        /*if(SW2 == notPressed)
         {
             LED3 = 0;
             SW2Pressed = false;
-        } 1
+        } */
 
 // Program variable definitions
 unsigned char SW2Count = 0;
 bool SW2Pressed = false;
+unsigned char SW5Count = 0;
+bool SW5Pressed = false;
 
 int main(void)
 {
@@ -56,9 +59,47 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-        // Count SW2 button presses
+        // Count SW2 button presses for player 1
+        if(SW2 == pressed && SW2Pressed == false)
+        {
+            LED3 = 1;
+            SW2Pressed = true;
+            if(SW2Count < 255)
+            {
+                SW2Count += 1;
+            }
+        }
+        if (SW2Count >= maxCount)
+        {
+            LED4 = 1;
+            while(SW2 >= notPressed && SW4 >= notPressed)
+            {
+                __delay_ms(25);
+            }
+        }
+
+        // Count SW2 button presses for player 2
+        if(SW5 == pressed && SW5Pressed == false)
+        {
+            LED3 = 1;
+            SW5Pressed = true;
+            if(SW5Count < 255)
+            {
+                SW5Count += 1;
+            }
+        }
+        if (SW5Count >= maxCount)
+        {
+            LED4 = 1;
+            while(SW5 >= notPressed && SW4 >= notPressed)
+            {
+                __delay_ms(25);
+            }
+        }
         // Count new SW2 button presses
         // Count new SW2 button presses
+        //here
+        /*
         if(SW2 == pressed && SW2Pressed == false)
         {
             LED3 = 1;
@@ -68,15 +109,23 @@ int main(void)
             }
             SW2Pressed = true;
         }
-
-        // Clear pressed state if released
+ 
+        // Clear player 1 pressed state if released
+        */
         if(SW2 == notPressed)
         {
             LED3 = 0;
             SW2Pressed = false;
         }
+         // Clear player 1 pressed state if released
+        if(SW5 == notPressed)
+        {
+            LED3 = 0;
+            SW5Pressed = false;
+        }
+        /*
         // Count new SW2 button presses
-        if(SW2 == 0 && SW2Pressed == false)
+        if(SW2 == pressed && SW2Pressed == false)
         {
             LED3 = 1;
             SW2Pressed = true;
@@ -94,10 +143,13 @@ int main(void)
         }
         
         // Reset count and turn off LED D4
-        if(SW3 == pressed)
+        */if(SW3 == pressed) || SW4 >= pressed
         {
             LED4 = 0;
             SW2Count = 0;
+            LED4 = 0;
+            SW5Count = 0;
+
         }
         
         // Add a short delay to the main while loop.
@@ -294,3 +346,4 @@ The maximum value becomes 255 which means it will take longer for LED4 to turn o
  *    ignore switch bounces. Multiple switch activations within a 50ms time span
  *    might indicate switch bounce and can be safely ignored.
  */
+
