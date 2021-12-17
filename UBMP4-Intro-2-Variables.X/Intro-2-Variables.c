@@ -52,116 +52,87 @@ bool SW5Pressed = false;
 
 int main(void)
 {
-    // Configure oscillator and I/O ports. These functions run once at start-up.
-    OSC_config();               // Configure internal oscillator for 48 MHz
-    UBMP4_config();             // Configure on-board UBMP4 I/O devices
-	
-    // Code in this while loop runs repeatedly.
-    while(1)
-	{
-        // Count SW2 button presses for player 1
-        if(SW2 == pressed && SW2Pressed == false)
-        {
-            LED3 = 1;
-            SW2Pressed = true;
-            if(SW2Count < 255)
-            {
-                SW2Count += 1;
-            }
-        }
-        if (SW2Count >= maxCount)
-        {
-            LED4 = 1;
-            while(SW2 >= notPressed && SW4 >= notPressed)
-            {
-                __delay_ms(25);
-            }
-        }
-
-        // Count SW2 button presses for player 2
-        if(SW5 == pressed && SW5Pressed == false)
-        {
-            LED3 = 1;
-            SW5Pressed = true;
-            if(SW5Count < 255)
-            {
-                SW5Count += 1;
-            }
-        }
-        if (SW5Count >= maxCount)
-        {
-            LED4 = 1;
-            while(SW5 >= notPressed && SW4 >= notPressed)
-            {
-                __delay_ms(25);
-            }
-        }
-        // Count new SW2 button presses
-        // Count new SW2 button presses
-        //here
-        /*
-        if(SW2 == pressed && SW2Pressed == false)
-        {
-            LED3 = 1;
-            if(SW2Count < 255)
-            {
-                SW2Count = SW2Count + 1;
-            }
-            SW2Pressed = true;
-        }
+   // Configure oscillator and I/O ports. These functions run once at start-up.
+   OSC_config();               // Configure internal oscillator for 48 MHz
+   UBMP4_config();             // Configure on-board UBMP4 I/O devices
+    
+   // Code in this while loop runs repeatedly.
+   while(1)
+    {
+       // Count SW2 button presses for player 1
+       if(SW2 == pressed && SW2Pressed == false)
+       {
+           LED3 = 1;
+           SW2Pressed = true;
+           if(SW2Count < 255)
+           {
+               SW2Count += 1;
+           }
+       }
  
-        // Clear player 1 pressed state if released
-        */
-        if(SW2 == notPressed)
-        {
-            LED3 = 0;
-            SW2Pressed = false;
-        }
-         // Clear player 1 pressed state if released
-        if(SW5 == notPressed)
-        {
-            LED3 = 0;
-            SW5Pressed = false;
-        }
-        /*
-        // Count new SW2 button presses
-        if(SW2 == pressed && SW2Pressed == false)
-        {
-            LED3 = 1;
-            SW2Pressed = true;
-            if(SW2Count < 255)
-            {
-                SW2Count = SW2Count + 1;
-            }
-        }
-
-        // Clear pressed state if released
-        if(SW2 == notPressed)
-        {
-            LED3 = 0;
-            SW2Pressed = false;
-        }
-        
-        // Reset count and turn off LED D4
-        */if(SW3 == pressed) || SW4 >= pressed
-        {
-            LED4 = 0;
-            SW2Count = 0;
-            LED4 = 0;
-            SW5Count = 0;
-
-        }
-        
-        // Add a short delay to the main while loop.
-        __delay_ms(10);
-        
-        // Activate bootloader if SW1 is pressed.
-        if(SW1 == pressed)
-        {
-            RESET();
-        }
-    }
+       // Count SW5 button presses for player 2
+       if(SW5 == pressed && SW5Pressed == false)
+       {
+           LED6 = 1;
+           SW5Pressed = true;
+           if(SW5Count < 255)
+           {
+               SW5Count += 1;
+           }
+       }
+ 
+       // Clear player 1 pressed state if released
+       if(SW2 == notPressed)
+       {
+           LED3 = 0;
+           SW2Pressed = false;
+       }
+ 
+       // Clear player 2 pressed state if released
+       if(SW5 == notPressed)
+       {
+           LED6 = 0;
+           SW5Pressed = false;
+       }
+ 
+       if(SW2Count >= maxCount)
+       {
+           LED4 = 1;
+           while(SW3 == notPressed && SW4 == notPressed)
+           {
+               __delay_ms(20);
+           }
+       }
+ 
+       if(SW5Count >= maxCount)
+       {
+           LED5 = 1;
+           while(SW3 == notPressed && SW4 == notPressed)
+           {
+               __delay_ms(20);
+           }
+       }
+      
+       // Reset count and turn off LED D4
+       if(SW3 == pressed || SW4 == pressed)
+       {
+           LED4 = 0;
+           LED5 = 0;
+           SW2Count = 0;
+           SW5Count = 0;
+       }
+      
+       // Add a short delay to the main while loop.
+       __delay_ms(10);
+      
+       // Activate bootloader if SW1 is pressed.
+       if(SW1 == 0)
+       {
+           RESET();
+       }
+   }
 }
+
 
 /* Program Analysis
  * 
